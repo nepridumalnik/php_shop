@@ -14,11 +14,12 @@ class App
         self::$app = Registry::instance();
 
         $this->getParams();
+        new ErrorHandler;
     }
 
     public function __destruct()
     {
-    // session_destroy();
+        // session_destroy();
     }
 
     private function getParams()
