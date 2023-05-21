@@ -5,7 +5,6 @@ namespace ishop;
 class Router
 {
     private static array $routes = [];
-    private static array $route = [];
 
     public static function add(string $regex, array $route = []): void
     {
@@ -17,24 +16,64 @@ class Router
         return self::$routes;
     }
 
-    public static function getRoute(): array
-    {
-        return self::$route;
-    }
-
     public static function dispatch($url): void
     {
-        echo $url . ': ';
-        if (self::matchRoute($url)) {
-            echo 'Ok';
+        if (self::matchRoute($url, $route)) {
+            $controller = 'app\\controllers\\' .
+                $route['prefix'] .
+                $route['controller'] .
+                'Controller';
+
+            if (class_exists($controller)) {
+                $controllerObject = new $controller($route);
+                $action = $route['action'] . 'Action';
+
+                if (
+                    method_exists($controllerObject, $action) &&
+                    is_callable(array($controllerObject, $action))
+                ) {
+                    $controllerObject->$action();
+                } else {
+                    throw new \Exception('Метод ' . $controller . '::' . $action . ' не найден', 404);
+                }
+            } else {
+                throw new \Exception('Контроллер ' . $controller . ' не найден', 404);
+            }
         } else {
-            echo 'Not Ok';
+            throw new \Exception("Страница не найдена", 404);
         }
     }
 
-    public static function matchRoute($url): bool
+    public static function matchRoute($url, &$route): bool
     {
-        return true;
+        $route = array();
+
+        foreach (self::$routes as $pattern => $route) {
+            if (preg_match("#{$pattern}#", $url, $matches)) {
+
+                foreach ($matches as $k => $v) {
+                    if (is_string($k)) {
+                        $route[$k] = $v;
+                    }
+                }
+
+                if (empty($route['action'])) {
+                    $route['action'] = 'index';
+                }
+                if (empty($route['prefix'])) {
+                    $route['prefix'] = '';
+                } else {
+                    $route['prefix'] .= '\\';
+                }
+
+                $route['controller'] = ucfirst($route['controller']);
+                $route['action'] = lcfirst($route['action']);
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }
 

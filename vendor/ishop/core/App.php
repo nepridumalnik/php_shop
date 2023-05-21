@@ -8,21 +8,22 @@ class App
 
     public function __construct()
     {
-        $query = trim($_SERVER['QUERY_STRING'], '/');
-        // session_start();
+        $query = trim($_SERVER['REQUEST_URI'], '/');
+        session_start();
 
         self::$app = Registry::instance();
 
         $this->getParams();
 
+        new ErrorHandler;
 
         Router::dispatch($query);
     }
 
-    public function __destruct()
-    {
-        // session_destroy();
-    }
+    // public function __destruct()
+    // {
+    //     session_destroy();
+    // }
 
     private function getParams()
     {
