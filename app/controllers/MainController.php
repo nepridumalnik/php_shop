@@ -6,7 +6,8 @@ class MainController extends AppController
 {
     public function indexAction()
     {
-        parent::setMeta('Main', 'Описание', 'Ключевые слова');
+        parent::setMeta(\ishop\App::$app->getProperty('shop_name'), 'Описание', 'Ключевые слова');
+        $this->setData(['name' => 'Ivan', 'age' => 20]);
     }
 }
 

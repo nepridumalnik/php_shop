@@ -2,7 +2,7 @@
 
 namespace ishop\base;
 
-/*
+/**
  * View
  * 
  * Базовый класс вида
@@ -15,8 +15,15 @@ class View
     public $view;
     public $layout;
     public $prefix;
-    public $meta = [];
+    public $meta = ['title' => '', 'description' => '', 'keywords' => ''];
 
+    /**
+     * Консруктор
+     * @param mixed $route
+     * @param mixed $meta
+     * @param mixed $layout
+     * @param mixed $view
+     */
     public function __construct($route, $meta, $layout = '', $view = '')
     {
         $this->route = $route;
@@ -33,11 +40,18 @@ class View
         }
     }
 
-    /*
+    /**
      * Отрисовка данных
+     * @throws \Exception
+     * @return void
      */
-    public function render(): void
+    public function render($data): void
     {
+        if (is_array($data)) {
+            extract($data);
+        }
+
+
         $viewFile = APP . "/views/{$this->prefix}{$this->controller}/{$this->view}.php";
         if (file_exists($viewFile)) {
             ob_start();
@@ -69,8 +83,8 @@ class View
         $meta = '';
 
         foreach ($this->meta as $key => $value) {
-            if ($key != 'title') {
-                $meta .= "<meta name=\"{$key}\" content=\"{$value}\">\n";
+            if ($key != 'title' && $value) {
+                $meta .= "<meta name=\"{$key}\" content=\"{$value}\">" . PHP_EOL;
             }
         }
 

@@ -25,7 +25,7 @@ abstract class Controller
     public function getView()
     {
         $viewObject = new \ishop\base\View($this->route, $this->meta, $this->layout, $this->view);
-        $viewObject->render();
+        $viewObject->render($this->data);
     }
 
     protected function setData($data)
