@@ -33,6 +33,7 @@ class Router
                     is_callable(array($controllerObject, $action))
                 ) {
                     $controllerObject->$action();
+                    $controllerObject->getView();
                 } else {
                     throw new \Exception('Метод ' . $controller . '::' . $action . ' не найден', 404);
                 }

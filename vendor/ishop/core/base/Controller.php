@@ -8,6 +8,7 @@ abstract class Controller
     public $controller;
     public $model;
     public $view;
+    public $layout;
     public $prefix;
     public $data = [];
     public $meta = [];
@@ -19,6 +20,12 @@ abstract class Controller
         $this->view = $route['action'];
         $this->controller = $route['controller'];
         $this->prefix = $route['prefix'];
+    }
+
+    public function getView()
+    {
+        $viewObject = new \ishop\base\View($this->route, $this->meta, $this->layout, $this->view);
+        $viewObject->render();
     }
 
     protected function setData($data)
