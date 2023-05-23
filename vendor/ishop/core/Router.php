@@ -2,6 +2,9 @@
 
 namespace ishop;
 
+/**
+ * Summary of Router
+ */
 class Router
 {
     private static array $routes = [];
@@ -18,6 +21,8 @@ class Router
 
     public static function dispatch($url): void
     {
+        self::removeQueryStr($url);
+
         if (self::matchRoute($url, $route)) {
             $controller = 'app\\controllers\\' .
                 $route['prefix'] .
@@ -42,6 +47,24 @@ class Router
             }
         } else {
             throw new \Exception("Страница не найдена", 404);
+        }
+    }
+
+    /**
+     * Вырезает параметры из пути
+     * @param string $url Путь
+     * @return void
+     */
+    private static function removeQueryStr(string &$url): void
+    {
+        if ($url) {
+            $params = explode('?', $url, 2);
+
+            if (strpos($params[0], '=') === false) {
+                $url = $params[0];
+            } else {
+                $url = '';
+            }
         }
     }
 

@@ -7,7 +7,6 @@ define('DEFAULT_SETTINGS',
     'smtp_login' => 'пока пусто',
     'smtp_password' => 'пока пусто',
     'pagination' => 10,
-
 ]
 );
 
