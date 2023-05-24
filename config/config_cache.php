@@ -1,7 +1,5 @@
 <?php
 
-echo 'CACHE_HOSTNAME: ' . getenv('CACHE_HOSTNAME');
-
 define('CACHE_CONFIG', [
     'scheme' => 'tcp',
     'host' => 'rediska',
