@@ -1,7 +1,7 @@
 <?php
 
 // true Разработка, false Продакшн
-define('DEBUG', true);
+define('DEBUG', getenv('DEBUG'));
 
 // Корень проекта
 define('ROOT', dirname(__DIR__));

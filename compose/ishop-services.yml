@@ -12,6 +12,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
       MYSQL_DATABASE: ${DATABASE}
+      DEBUG: ${DEBUG}
     volumes:
       - ../:/var/www/html
     ports:
