@@ -17,8 +17,9 @@ class MainController extends AppController
         $data = $cache->get('test');
 
         if (!$data) {
-            $cache->set('test', $a);
-            $data = $a;
+            $cache->set('test', serialize($a));
+            $data = $cache->get('test');
+            $data = unserialize($data);
         }
 
         debug($data);

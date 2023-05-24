@@ -9,4 +9,5 @@ return array(
     'ishop\\' => array($vendorDir . '/ishop/core'),
     'app\\' => array($baseDir . '/app'),
     'RedBeanPHP\\' => array($vendorDir . '/gabordemooij/redbean/RedBeanPHP'),
+    'Predis\\' => array($vendorDir . '/predis/predis/src'),
 );

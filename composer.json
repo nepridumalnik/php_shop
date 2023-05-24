@@ -14,6 +14,7 @@
         }
     },
     "require": {
-        "gabordemooij/redbean": "^5.7"
+        "gabordemooij/redbean": "*",
+        "predis/predis": "^2.1"
     }
 }

@@ -24,7 +24,7 @@ services:
     image: mysql
     restart: always
     container_name: mysql
-    hostname: mysql
+    hostname: ${DB_HOSTNAME}
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
@@ -38,3 +38,9 @@ services:
       PMA_HOST: db
     ports:
       - "8080:80"
+  
+  # Кэш
+  cache:
+    image: redis
+    restart: always
+    hostname: ${CACHE_HOSTNAME}

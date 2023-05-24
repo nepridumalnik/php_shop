@@ -9,50 +9,39 @@ class Cache
 {
     use TSingleton;
 
-    public function set($key, $data, $seconds = 3600): bool
+    private \Predis\Client $redis;
+
+    private function __construct()
+    {
+        $cache = require_once CONF . '/config_cache.php';
+
+        $this->redis = new \Predis\Client($cache);
+        $this->redis->connect();
+    }
+
+    public function __destruct()
+    {
+        $this->redis->disconnect();
+    }
+
+    public function set(string $key, string $value, int $seconds = 3600)
     {
         if ($seconds > 0) {
-            $content = array(
-                'data' => $data,
-                'end_time' => time() + $seconds,
-            );
-
-            if (file_put_contents(self::makeFilename($key), serialize($content))) {
-                return true;
-            }
+            return $this->redis->setex($key, $seconds, $value);
         }
 
-        return false;
+        return $this->redis->set($key, $value);
     }
 
-    public function get($name): array|bool
+    public function get(string $key)
     {
-        $file = self::makeFilename($name);
-        if (file_exists($file)) {
-            $content = unserialize(file_get_contents($file));
-
-            if (time() <= $content['end_time']) {
-                return $content;
-            }
-
-            unlink($file);
-        }
-
-        return false;
+        $value = $this->redis->get($key);
+        return $value;
     }
 
-    public function delete($name)
+    public function delete($key)
     {
-        $file = self::makeFilename($name);
-
-        if (file_exists($file)) {
-            unlink($file);
-        }
-    }
-
-    private static function makeFilename(&$name): string
-    {
-        return CACHE . '/' . md5($name) . EXTENSION;
+        return $this->redis->del($key);
     }
 }
 
