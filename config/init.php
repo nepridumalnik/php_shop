@@ -19,7 +19,7 @@ define('CACHE', ROOT . '/tmp/cache');
 define('CONF', ROOT . '/config');
 
 // Путь до папки с шаблоном по умолчанию
-define('LAYOUT', 'default');
+define('LAYOUT', 'watches');
 
 // Путь до папки с классами ядра
 define('CORE', ROOT . '/vendor/ishop/core');

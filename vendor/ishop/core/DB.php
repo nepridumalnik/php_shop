@@ -20,8 +20,6 @@ class Db
 
             throw new \Exception('Нет соединения с базой данных: ' . $errorInfo, 500);
         }
-
-        echo 'Соединение установлено';
     }
 }
 
