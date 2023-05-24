@@ -24,13 +24,11 @@ class ErrorHandler
     private function logErrors($message = '', $file = '', $line = '')
     {
         echo 'Logging in: ' . ROOT . '/tmp/errors.log';
-        $res = error_log(
+        error_log(
             '[' . date('d-m-Y H:i:s') . "] Текст ошибки: $message\nФайл: $file | Строка: $line\n#####################################",
             3,
             ROOT . '/tmp/errors.log'
         );
-
-        var_dump($res);
     }
 
     private function displayError($errno, $errstr, $errfile, $errline, $responce = 404)

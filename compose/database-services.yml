@@ -1,6 +1,22 @@
 version: '3.9'
 
 services:
+  # Сервер
+  ishop:
+    build:
+      context: .
+      dockerfile: images/Server
+    restart: always
+    container_name: php_apache
+    hostname: php_apache
+    environment:
+      MYSQL_ROOT_PASSWORD: ==PaSsWoRd==
+      MYSQL_DATABASE: ishop
+    volumes:
+      - ../:/var/www/html
+    ports:
+      - "80:80"
+
   # База данных
   db:
     image: mysql
@@ -9,9 +25,7 @@ services:
     hostname: mysql
     environment:
       MYSQL_ROOT_PASSWORD: ==PaSsWoRd==
-      MYSQL_DATABASE: main_database
-    ports:
-      - "3306:3306"
+      MYSQL_DATABASE: ishop
 
   # Админка
   myadmin:
@@ -21,4 +35,4 @@ services:
       MYSQL_ROOT_PASSWORD: ==PaSsWoRd==
       PMA_HOST: db
     ports:
-      - "80:80"
+      - "8080:80"

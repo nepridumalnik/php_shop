@@ -1,0 +1,17 @@
+FROM php:apache
+
+RUN apt update && apt install git -y
+
+# Установка composer и его компонентов
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    php composer-setup.php \
+    php -r "unlink('composer-setup.php');" \
+    mv composer.phar /usr/local/bin/composer \
+    composer install
+
+# Установка дополнений Docker для работы с MySQL
+RUN docker-php-ext-install pdo pdo_mysql mysqli
+
+# Разрешить переадресацию
+# Команду "service apache2 restart" выполнять не надо, потому что приведёт к перезапуску контейнера
+RUN a2enmod rewrite
