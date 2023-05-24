@@ -3,7 +3,7 @@
         'name' => 'ne.pridumal.nik/shop',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'cbb43f66009edde1e7b1a017786c1075f45b4e4a',
+        'reference' => '628ec0479c0aaccf7c1c03810d5aab713bc1f9ff',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'ne.pridumal.nik/shop' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'cbb43f66009edde1e7b1a017786c1075f45b4e4a',
+            'reference' => '628ec0479c0aaccf7c1c03810d5aab713bc1f9ff',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

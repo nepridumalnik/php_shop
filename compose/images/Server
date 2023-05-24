@@ -1,13 +1,18 @@
 FROM php:apache
 
+# Чтобы Composer мог установиться в контейнере
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
+ADD composer.json /var/www/html/composer.json
+
 RUN apt update && apt install git -y
 
 # Установка composer и его компонентов
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    php composer-setup.php \
-    php -r "unlink('composer-setup.php');" \
-    mv composer.phar /usr/local/bin/composer \
-    composer install
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+RUN php composer-setup.php
+RUN php -r "unlink('composer-setup.php');"
+RUN mv composer.phar /bin/composer
+RUN composer install
 
 # Установка дополнений Docker для работы с MySQL
 RUN docker-php-ext-install pdo pdo_mysql mysqli
