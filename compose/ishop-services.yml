@@ -10,8 +10,8 @@ services:
     container_name: php_apache
     hostname: php_apache
     environment:
-      MYSQL_ROOT_PASSWORD: ==PaSsWoRd==
-      MYSQL_DATABASE: ishop
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE}
     volumes:
       - ../:/var/www/html
     ports:
@@ -24,15 +24,15 @@ services:
     container_name: mysql
     hostname: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: ==PaSsWoRd==
-      MYSQL_DATABASE: ishop
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE}
 
   # Админка
   myadmin:
     image: phpmyadmin
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ==PaSsWoRd==
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
       PMA_HOST: db
     ports:
       - "8080:80"
